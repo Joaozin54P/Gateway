@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: gateway
+
+    cors:
+      url:
+        - localhost:3000
+        - http://localhost:3000
+        - https://localhost:3000
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    gateway:
+      routes:
+
+        # API CLIENTE - porta 8081
+        - id: cliente-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/cliente/**
+
+        # API LOGIN - porta 8082
+        - id: login-auth
+          uri: http://localhost:8082
+          predicates:
+            - Path=/login/**
+
+        # API PRODUTO - porta 8083
+        - id: produto-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/produto/**
